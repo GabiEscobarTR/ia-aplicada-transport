@@ -100,12 +100,6 @@ def generate_route(map, oriX, oriY, destX, destY):
   
 
 
-
-
-      
-      
-     
-
 c1 = Car(0,0,2,2)
 c2 = Car(0,0,0,1)
 m = Map(200,200)
