@@ -1,3 +1,10 @@
+"""
+Versió1
+Utilitzar # per afegir comentaris (no afecten al codi)
+
+@author: GabiEscobar
+"""
+
 import random
 from math import *
 import numpy as np
@@ -5,8 +12,9 @@ import matplotlib.pyplot as plt
 import time
 
 
-
+#Variables globals
 TIME_STEP = 1
+
 
 
 class Car():
@@ -49,7 +57,6 @@ class Map():
       return self.grid[x,y]
      
 
-
 class Game():
   
   def __init__(self, map, cars):
@@ -77,6 +84,8 @@ class Game():
           
 
 
+          
+          
 def generate_route(map, oriX, oriY, destX, destY):
   """
   """
@@ -99,6 +108,8 @@ def generate_route(map, oriX, oriY, destX, destY):
   #...
   
 
+  
+  
 
 c1 = Car(0,0,2,2)
 c2 = Car(0,0,0,1)
