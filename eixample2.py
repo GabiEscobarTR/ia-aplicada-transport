@@ -1,18 +1,45 @@
 import matplotlib.pyplot as plt
 import networkx as nx
-from networkx.utils.random_sequence import weighted_choice
+import csv
 
-G = nx.DiGraph()
-G.add_weighted_edges_from([(1, 2, 1.0), (2, 3, 1.0), (3, 4, 1.0), (4, 8, 1.0), (8, 7, 1.0), (7, 6, 1.0), (6, 5, 1.0), (1, 5, 7.1)])
+def main():
+    
+    G = nx.DiGraph()
 
+    with open(r'C:\Users\gaesc\OneDrive\Escritorio\Jesuïtes Casp\TR\.csv Files\BCN_GrafVial_Trams_ETRS89_CSV.csv') as csv_file:
+        edges = csv.reader(csv_file)
 
-pos = { 1:(0, 0), 2:(1, 0), 3:(2, 0), 4:(3, 0), 5:(0, 1), 6:(1, 1), 7:(2, 1), 8:(3, 1)}
-labels = nx.get_edge_attributes(G, 'weight')
+        next(edges)
+        for edge in edges:
+            initial_node = edge[6]
+            end_node = edge[7]
+            
+            if edge[9] == 'Eixample':
+                G.add_edge(initial_node, end_node)
+                G[initial_node][end_node]['weight'] = edge[2]
 
-nx.draw_networkx_nodes(G, pos, node_size=500)
-nx.draw_networkx_edges(G, pos, edgelist=G.edges(), edge_color="black")
-nx.draw_networkx_labels(G, pos)
-nx.draw_networkx_edge_labels(G, pos, edge_labels=labels)
+    nodes_list = [item for t in G.edges() for item in t]
 
-print(nx.shortest_path(G, 1, 5, weight='weight'))
-plt.show()
+    with open(r'C:\Users\gaesc\OneDrive\Escritorio\Jesuïtes Casp\TR\.csv Files\BCN_GrafVial_Nodes_ETRS89_CSV.csv') as csv_file:
+        nodes = csv.reader(csv_file)
+
+        next(nodes)
+        pos = {}
+        for node in nodes:
+            node_id = node[1]
+            node_x = float(node[2])
+            node_y = float(node[3])
+
+            if node_id in nodes_list:
+                pos[node_id] = (node_x, node_y)     
+
+    nx.draw_networkx_nodes(G, pos, node_size=0.5)
+    nx.draw_networkx_edges(G, pos, width=0.2, edgelist=G.edges(), arrowsize=2, edge_color="black")
+
+    plt.show()
+
+    
+
+if __name__ == '__main__':
+    print("Executant...")
+    main()
