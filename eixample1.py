@@ -18,18 +18,14 @@ TIME_STEP = 1
 
 
 class Car():
-  def __init__(self, x, y, speedX, speedY): 
+
+  def __init__(self, x, y): 
       self.x = x
       self.y = y
-      self.speedX = speedX
-      self.speedY = speedY
       self.route = []
       self.crash = False
       
   def generate_route(self, map, destX, destY):
-      """
-      Generates a route from destX to destY.
-      """
       
       route = []
       oriX = self.x
@@ -89,16 +85,17 @@ class Car():
           print("Route is empty.")
           return False
     
+    
 
 class Map():
     def __init__(self, sizeX, sizeY):
         self.grid = np.ones((sizeX, sizeY))
         
-        #Creació de les carreterres en l'eix X
+        #Creacio de les carreterres en l'eix X
         for i in range(0, sizeX, 10): 
             self.grid[i,:] = 0
         
-        #Creació de les carreterres en l'eix Y
+        #Creacio de les carreterres en l'eix Y
         for j in range(0, sizeY, 10): 
             self.grid[:,j] = 0
                 
@@ -107,7 +104,6 @@ class Map():
       
     def get(self, x, y):
       return self.grid[x,y]
-
 
 
 
@@ -128,7 +124,14 @@ class Main():
             
         self.collisions() 
 
-    def show(self):
+    def show(self,
+             x: int = 5,
+             y: int = 10) -> list:
+        """
+        Plots the map.
+        :param x: the x coordnate.
+        :param y: the y coordinate.
+        """
         self.map.show()
         for car in self.cars:
             if not car.crash:
@@ -150,8 +153,8 @@ class Main():
   
 m = Map(200,200)
 
-c1 = Car(80,40,2,2)
-c2 = Car(0,0,0,1)
+c1 = Car(80,40)
+c2 = Car(0,0)
 
 d1 = (160,110)
 d2 = (20,50)
@@ -159,11 +162,14 @@ d2 = (20,50)
 g = Main(map=m, cars=[c1,c2], dests=[d1,d2])
 
 
-iterations = 1000
+
+iterations = d1[0] + d1[1]
 for _ in range(iterations):
   g.step()
   g.show()
   #time.sleep(0.5)
+  
+
   
 
 
