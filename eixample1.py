@@ -27,6 +27,9 @@ class Car():
       self.crash = False
       
   def generate_route(self, map, destX, destY):
+      """
+      Generates a route from destX to destY.
+      """
       
       route = []
       oriX = self.x
